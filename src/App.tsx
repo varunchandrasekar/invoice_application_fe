@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { BillFormData } from './types/bill.types';
-import { useBillCalculator } from './hooks/useBillCalculator';
 import { InvoiceHeaderForm } from './components/InvoiceHeaderForm';
 import { ClientDetailsForm } from './components/ClientDetailsForm';
 import { TimeCostsSection } from './components/TimeCostsSection';
