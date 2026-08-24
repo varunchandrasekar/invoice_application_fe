@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BillFormData } from '../types/bill.types';
 
-const API_BASE = 'http://localhost:8080';
+const API_BASE = 'https://invoice-application-be.onrender.com';
 
 export const generateBill = async (data: BillFormData): Promise<void> => {
   const response = await axios.post(`${API_BASE}/api/v1/bill/generate`, data, {
