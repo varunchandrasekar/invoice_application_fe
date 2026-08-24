@@ -8,7 +8,6 @@ import { DisbursementsSection } from './components/DisbursementsSection';
 import { OutstandingInvoicesSection } from './components/OutstandingInvoicesSection';
 import { MoneyOnAccountSection } from './components/MoneyOnAccountSection';
 import { ScheduleOfWorkSection } from './components/ScheduleOfWorkSection';
-import { SummaryPanel } from './components/SummaryPanel';
 import { GenerateButton } from './components/GenerateButton';
 
 const initialFormData: BillFormData = {
@@ -35,7 +34,6 @@ const initialFormData: BillFormData = {
 
 function App() {
   const [formData, setFormData] = useState<BillFormData>(initialFormData);
-  const totals = useBillCalculator(formData);
 
   const updateSection = <K extends keyof BillFormData>(key: K, data: BillFormData[K]) => {
     setFormData(prev => ({ ...prev, [key]: data }));
