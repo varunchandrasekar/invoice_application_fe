@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BillFormData } from '../types/bill.types';
 
 interface Props {
@@ -9,21 +9,43 @@ interface Props {
 }
 
 export const InvoiceHeaderForm: React.FC<Props> = ({ data, discountPercentage, onChange, onDiscountChange }) => {
+  const [isDiscountEnabled, setIsDiscountEnabled] = useState(!!discountPercentage && discountPercentage > 0);
+
+  const handleToggleDiscount = (checked: boolean) => {
+    setIsDiscountEnabled(checked);
+    if (!checked) {
+      onDiscountChange(0);
+    }
+  };
+
   return (
     <div className="glass-card">
       <div className="section-header">
         <h2 className="section-title">Invoice Details</h2>
-        <div className="flex items-center gap-2">
-          <label>Discount (%)</label>
-          <input 
-            type="number"
-            min="0"
-            max="100"
-            step="1"
-            className="input-field w-24" 
-            value={discountPercentage || ''}
-            onChange={e => onDiscountChange(parseFloat(e.target.value) || 0)}
-          />
+        <div className="flex items-center gap-3">
+          <label>Apply Discount?</label>
+          <label className="switch">
+            <input 
+              type="checkbox" 
+              checked={isDiscountEnabled} 
+              onChange={e => handleToggleDiscount(e.target.checked)} 
+            />
+            <span className="slider"></span>
+          </label>
+          {isDiscountEnabled && (
+            <div className="flex items-center gap-1">
+              <input 
+                type="number"
+                min="0"
+                max="100"
+                step="1"
+                className="input-field w-20 text-center" 
+                value={discountPercentage || ''}
+                onChange={e => onDiscountChange(parseFloat(e.target.value) || 0)}
+              />
+              <span className="text-secondary">%</span>
+            </div>
+          )}
         </div>
       </div>
       <div className="form-grid">

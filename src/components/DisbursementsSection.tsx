@@ -60,12 +60,15 @@ export const DisbursementsSection: React.FC<Props> = ({ data, onChange }) => {
                     <input className="input-field" value={item.description} onChange={e => updateRow(item.id, { description: e.target.value })} />
                   </td>
                   <td>
-                    <input type="number" min="0" step="0.01" className="input-field" value={item.netAmount || ''} onChange={e => updateRow(item.id, { netAmount: parseFloat(e.target.value) || 0, vatApplicable: true })} />
+                    <input type="number" min="0" step="0.01" className="input-field" value={item.netAmount || ''} onChange={e => updateRow(item.id, { netAmount: parseFloat(e.target.value) || 0 })} />
                   </td>
-                  <td className="text-center font-medium">
-                    {formatCurrency(item.netAmount * 0.2)}
+                  <td className="text-center">
+                    <label className="switch">
+                      <input type="checkbox" checked={item.vatApplicable} onChange={e => updateRow(item.id, { vatApplicable: e.target.checked })} />
+                      <span className="slider"></span>
+                    </label>
                   </td>
-                  <td className="font-medium text-right">{formatCurrency(item.netAmount * 1.2)}</td>
+                  <td className="font-medium text-right">{formatCurrency(item.netAmount + (item.vatApplicable ? item.netAmount * 0.2 : 0))}</td>
                   <td>
                     <button type="button" className="action-btn danger" onClick={() => removeRow(item.id)}><Trash2 size={16}/></button>
                   </td>

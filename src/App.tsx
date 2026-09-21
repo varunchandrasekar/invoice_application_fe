@@ -8,6 +8,7 @@ import { OutstandingInvoicesSection } from './components/OutstandingInvoicesSect
 import { MoneyOnAccountSection } from './components/MoneyOnAccountSection';
 import { ScheduleOfWorkSection } from './components/ScheduleOfWorkSection';
 import { GenerateButton } from './components/GenerateButton';
+import { SessionManagerPanel } from './components/SessionManagerPanel';
 
 const initialFormData: BillFormData = {
   invoiceHeader: {
@@ -38,6 +39,10 @@ function App() {
     setFormData(prev => ({ ...prev, [key]: data }));
   };
 
+  const handleLoadSession = (data: BillFormData) => {
+    setFormData(data);
+  };
+
   return (
     <div className="app-container">
       <div className="main-content">
@@ -47,6 +52,8 @@ function App() {
           </h1>
           <p className="text-secondary mt-1">Legal Bill Generator</p>
         </header>
+
+        <SessionManagerPanel onLoad={handleLoadSession} />
 
         <InvoiceHeaderForm 
           data={formData.invoiceHeader}
@@ -81,8 +88,10 @@ function App() {
           onChange={d => updateSection('moneyOnAccount', d)}
         />
 
-        <ScheduleOfWorkSection 
+        <ScheduleOfWorkSection
           data={formData.scheduleOfWork}
+          hourlyRate={formData.invoiceHeader.hourlyRate}
+          paralegalRate={formData.invoiceHeader.paralegalRate}
           onChange={d => updateSection('scheduleOfWork', d)}
         />
 
